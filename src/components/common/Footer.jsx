@@ -101,7 +101,7 @@ const Footer = () => {
           <span className="hover:underline cursor-pointer">Privacy Center</span>
           <span className="hover:underline cursor-pointer">Cookies</span>
         </div>
-        <p>&copy; 2026 AI Mood Music. Powered by AI Music Intelligence.</p>
+        <p>&copy; 2026 SonicAI Music. Powered by AI Music Intelligence.</p>
       </div>
     </footer>
   );

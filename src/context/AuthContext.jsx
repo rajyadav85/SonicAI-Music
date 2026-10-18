@@ -104,7 +104,7 @@ export const AuthProvider = ({ children }) => {
     setUser(newUser);
     localStorage.setItem(ACTIVE_USER_KEY, JSON.stringify(newUser));
     setIsAuthModalOpen(false);
-    showToast(`Account created! Welcome to AI Mood Music, ${newUser.name}! 🎉`, 'success');
+    showToast(`Account created! Welcome to SonicAI Music, ${newUser.name}! 🎉`, 'success');
     return { success: true };
   }, [registeredUsers]);
 

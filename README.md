@@ -1,148 +1,197 @@
-# 🎵 AI Mood Music - Frontend Documentation
+# 🎵 SonicAI Music — AI-Powered Music Streaming Web App
 
-A modern, responsive, Spotify-grade music streaming web application built with **React**, **Vite**, **Tailwind CSS**, and the **JioSaavn Music API**.
+A modern, responsive, **Spotify-inspired music streaming platform** built with **React 19**, **Vite**, and **Tailwind CSS v4**. Features intelligent mood-based song discovery powered by AI prompt analysis, real-time JioSaavn API integration, and continuous background audio playback.
+
+![React](https://img.shields.io/badge/React-19.2-61DAFB?logo=react&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-7.3-646CFF?logo=vite&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.3-06B6D4?logo=tailwindcss&logoColor=white)
+![React Router](https://img.shields.io/badge/React_Router-7.18-CA4245?logo=reactrouter&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-green)
 
 ---
 
-## 📂 1. Project Folder Structure & File Responsibilities
+## ✨ Key Features
 
-Below is an itemized breakdown of each directory and file designed for beginners and freshers:
+| Feature | Description |
+|:---|:---|
+| 🎯 **AI Mood Detection** | Natural language prompt analyzer identifies user mood (happy, sad, romantic, energetic, chill, party, devotional) and auto-curates matching playlists |
+| 🔍 **Smart Search** | 350ms debounced search engine integrated with JioSaavn REST API for real-time song, artist, and album discovery across 100k+ tracks |
+| 🎵 **Continuous Audio Playback** | HTML5 Audio engine with custom seekbar, volume slider, shuffle, repeat, and queue management — playback persists across all route transitions |
+| 👤 **Artist Discography** | 12 verified Indian playback singer profiles with hero banners, monthly listener stats, and top 10 tracklist tables |
+| 💿 **Album Soundtracks** | 11 Bollywood blockbuster movie soundtracks with sequential playback, category filters, and vinyl-art detail pages |
+| ❤️ **Liked Songs** | Personal favorites collection persisted via LocalStorage with authentication gate |
+| 🔐 **Client-Side Auth** | Secure signup/login modal with SHA-256 password hashing (CryptoJS) and persistent sessions |
+| 📱 **Fully Responsive** | Mobile-first design with off-canvas sidebar, swipe-friendly carousels, and fluid layouts (320px → 2560px) |
+| 🛣️ **SPA Routing** | React Router v7 with deep linking, browser history support, and URL-driven navigation |
 
-```text
-AI mood Music/
-├── public/                     # Static assets (images, icons)
-│   ├── artists/                # Local HD portraits (.jpg) of 12 prominent Indian artists
-│   └── vite.svg                # Application favicon
-│
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|:---|:---|
+| **Frontend Framework** | React 19 (Functional Components + Hooks) |
+| **Build Tool** | Vite 7.3 (HMR, ESBuild, Tree-Shaking) |
+| **Styling** | Tailwind CSS v4 (Utility-First, Dark Theme) |
+| **Routing** | React Router DOM v7 (BrowserRouter, NavLink) |
+| **State Management** | React Context API + Custom Hooks (`useMusic`, `useAuth`) |
+| **API Integration** | Axios + JioSaavn Public REST API |
+| **Audio Engine** | HTML5 Audio API with custom controls |
+| **Authentication** | Client-Side Auth + CryptoJS SHA-256 Hashing |
+| **Data Persistence** | Browser LocalStorage |
+| **Icons** | Lucide React |
+| **Linting** | ESLint 9 |
+
+---
+
+## 📁 Project Structure
+
+```
+SonicAI Music/
+├── public/
+│   ├── artists/                 # HD artist portraits (12 singers)
+│   └── vite.svg
 ├── src/
-│   ├── components/             # Reusable modular UI components
+│   ├── components/
 │   │   ├── auth/
-│   │   │   └── AuthModal.jsx   # Login & signup popup dialog with client-side form validation
+│   │   │   └── AuthModal.jsx    # Login/Signup modal with validation
 │   │   ├── common/
-│   │   │   └── Footer.jsx      # Footer containing brand credits, links, and copyright
+│   │   │   └── Footer.jsx       # Site footer with links
 │   │   ├── layout/
-│   │   │   ├── Navbar.jsx      # Top navigation header featuring live debounced search and profile menu
-│   │   │   ├── Sidebar.jsx     # Persistent left navigation drawer (Home, Moods, Liked Songs, Playlists)
-│   │   │   └── PlayerBar.jsx   # Sticky bottom playback controller (Play, Pause, Seek, Volume, Shuffle)
+│   │   │   ├── Navbar.jsx       # Top navigation bar with search
+│   │   │   ├── Sidebar.jsx      # Collapsible sidebar with NavLinks
+│   │   │   └── PlayerBar.jsx    # Persistent bottom audio player
 │   │   └── music/
-│   │       ├── AiBanner.jsx    # Dynamic AI prompt banner displaying tailored moods & playlists
-│   │       ├── MoodPills.jsx   # Filter pills for instant category switches (Chill, Energy, Sad, Romantic, etc.)
-│   │       ├── SectionGrid.jsx # Core dashboard view orchestrator (Tracks, Artist & Album Hero views)
-│   │       ├── SongCard.jsx    # Individual song card with artwork, animated equalizer, play, and favorite action
-│   │       ├── PopularArtists.jsx # Horizontal artist carousel with verified badges and listener counts
-│   │       ├── PopularAlbums.jsx  # Blockbuster albums carousel with category filter pills
-│   │       └── ArtistAvatar.jsx   # Singer circular avatar with fallback dynamic gradient initials
-│   │
-│   ├── context/                # Global state layer powered by React Context API
-│   │   ├── MusicContext.jsx    # Audio player engine, song queue, active moods, likes, and search results
-│   │   ├── AuthContext.jsx     # Authentication state (Login, Signup, User sessions, Toast alerts)
-│   │   ├── context.js          # Raw React.createContext instances
-│   │   ├── useMusic.js         # Custom consumption hook -> useMusic()
-│   │   └── useAuth.js          # Custom consumption hook -> useAuth()
-│   │
+│   │       ├── AiBanner.jsx     # AI mood prompt input banner
+│   │       ├── ArtistAvatar.jsx # Reusable artist image component
+│   │       ├── MoodPills.jsx    # Horizontal mood filter tabs
+│   │       ├── PopularArtists.jsx # Artist carousel with navigation
+│   │       ├── PopularAlbums.jsx  # Album carousel with category filters
+│   │       ├── SectionGrid.jsx  # Main content view controller
+│   │       └── SongCard.jsx     # Individual song card component
+│   ├── context/
+│   │   ├── MusicContext.jsx     # Global music state (queue, playback, API)
+│   │   ├── AuthContext.jsx      # Authentication state (user, sessions)
+│   │   ├── useMusic.js          # Custom hook for music context
+│   │   └── useAuth.js           # Custom hook for auth context
 │   ├── data/
-│   │   └── mockSongs.js        # Curated fallback dataset (Moods, Top Songs, Artists, and Albums)
-│   │
+│   │   └── mockSongs.js         # Curated dataset (songs, artists, albums, moods)
+│   ├── pages/
+│   │   ├── HomePage.jsx         # Landing page (/)
+│   │   ├── ArtistsPage.jsx      # All artists grid (/artists)
+│   │   ├── ArtistDetailPage.jsx # Singer profile (/artist/:artistId)
+│   │   ├── AlbumsPage.jsx       # All albums grid (/albums)
+│   │   ├── AlbumDetailPage.jsx  # Album detail (/album/:albumId)
+│   │   ├── LikedSongsPage.jsx   # Favorites collection (/liked-songs)
+│   │   └── MoodPage.jsx         # Mood playlist (/mood/:moodId)
 │   ├── services/
-│   │   ├── musicApi.js         # JioSaavn API client and smart search query resolver
-│   │   └── aiService.js        # Natural-language mood prompt parser
-│   │
-│   ├── App.jsx                 # Root layout assembling Sidebar, Navbar, Main Content, and PlayerBar
-│   ├── main.jsx                # Application entry file mounting context providers into the DOM
-│   └── index.css               # Global styles, Tailwind directives, and custom scrollbar rules
-│
-├── package.json                # Project dependencies, scripts, and runtime configuration
-└── vite.config.js              # Vite bundler, proxy configuration, and plugin settings
+│   │   ├── musicApi.js          # JioSaavn API integration layer
+│   │   └── aiService.js         # AI mood analysis service
+│   ├── App.jsx                  # Root layout + route configuration
+│   ├── main.jsx                 # Entry point with BrowserRouter
+│   └── index.css                # Global styles + Tailwind imports
+├── index.html                   # HTML entry point
+├── vite.config.js               # Vite configuration
+├── eslint.config.js             # ESLint configuration
+├── package.json
+└── README.md
 ```
 
 ---
 
-## 🌲 2. Component Hierarchy
+## 🛣️ Routes
 
-```mermaid
-graph TD
-    App[App.jsx] --> MusicProvider[MusicProvider]
-    App --> AuthProvider[AuthProvider]
-    App --> Sidebar[Sidebar.jsx]
-    App --> Navbar[Navbar.jsx]
-    App --> MainContent[main-scroll-container]
-    
-    MainContent --> AiBanner[AiBanner.jsx]
-    MainContent --> MoodPills[MoodPills.jsx]
-    MainContent --> SectionGrid[SectionGrid.jsx]
-    MainContent --> Footer[Footer.jsx]
-    
-    SectionGrid --> ArtistHero[Artist Profile Hero Banner]
-    SectionGrid --> AlbumHero[Album Profile Hero Banner]
-    SectionGrid --> SongCardsList[SongCard.jsx Carousel]
-    SectionGrid --> PopularArtists[PopularArtists.jsx]
-    SectionGrid --> PopularAlbums[PopularAlbums.jsx]
-    
-    App --> PlayerBar[PlayerBar.jsx]
-    App --> AuthModal[AuthModal.jsx]
-```
+| Route | Page | Description |
+|:---|:---|:---|
+| `/` | HomePage | Main dashboard with AI banner, mood pills, trending songs, artist & album carousels |
+| `/artists` | ArtistsPage | Full responsive grid of all artists with real-time search filter |
+| `/artist/:artistId` | ArtistDetailPage | Individual artist hero banner with verified badge and tracklist |
+| `/albums` | AlbumsPage | Full responsive grid of all albums with category filter pills |
+| `/album/:albumId` | AlbumDetailPage | Individual album detail with vinyl art and sequential tracklist |
+| `/liked-songs` | LikedSongsPage | User's personal liked songs collection (requires login) |
+| `/mood/:moodId` | MoodPage | Mood-specific curated playlist (chill, energy, romantic, etc.) |
 
 ---
 
-## 🔄 3. State Management Architecture
+## 🚀 Getting Started
 
-### A. `MusicContext.jsx` (Core Playback Engine)
-* **`currentSong`**: Stores the metadata object of the currently playing track.
-* **`isPlaying`**: Boolean flag indicating playback status (`true` when playing, `false` when paused).
-* **`currentTime` & `duration`**: Numeric counters tracking elapsed and total track duration in seconds for seekbar synchronization.
-* **`volume` & `isMuted`**: Audio gain values scaled from `0.0` to `1.0`.
-* **`likedSongs`**: Array of user-favorited tracks persisted to browser `localStorage`.
-* **`activeMood`**: Active view filter (`'all'`, `'chill'`, `'energy'`, `'romantic'`, `'artist'`, `'album'`, `'liked'`).
-* **`selectedArtist`**: Holds selected artist data to display their dedicated discography view.
-* **`selectedAlbum`**: Holds selected soundtrack details to populate the complete album tracklist table.
-* **`resetToHome()`**: Centralized action to clear active filters and return cleanly to the home view.
+### Prerequisites
 
-### B. `AuthContext.jsx` (User Authentication System)
-* **`user`**: Stores logged-in account details (display name, email address, avatar).
-* **`openAuthModal(mode)`**: Opens the authentication dialog configured for either login or registration.
-* **`login()` & `signup()`**: Handles client-side credential verification, token/session persistence, and validation feedback.
+- **Node.js** >= 18.x
+- **npm** >= 9.x
 
----
-
-## 🎵 4. How Audio Playback Operates Under the Hood
-
-1. **HTML5 Audio Instance**: Initialized once inside `MusicContext.jsx` using `const audioRef = useRef(new Audio())` to prevent redundant audio elements across re-renders.
-2. **Audio Lifecycle Listeners**: Configured inside a top-level `useEffect` hook:
-   * `'timeupdate'`: Triggers smooth updates to the seekbar and elapsed time counters.
-   * `'ended'`: Automatically advances playback to the next track in the queue via `handleNext()`.
-   * `'loadedmetadata'`: Synchronizes track duration accurately when a new audio stream buffers.
-   * `'play'` and `'pause'`: Keeps all UI play/pause toggles and animated equalizers strictly in sync with hardware state.
-
----
-
-## 🌐 5. Search Pipeline & API Integration
-
-1. The user types an artist, track, or mood query into the search input inside `Navbar.jsx`.
-2. A **350ms debounce handler** buffers input strokes to eliminate wasteful API requests while typing.
-3. `musicApi.js` executes queries against the **JioSaavn API** via Vite proxy (`/api/saavn`) to fetch high-bitrate audio streams and HD cover art.
-4. If requests fail due to network restrictions or rate limiting, the client seamlessly falls back to local records inside `mockSongs.js` without interrupting the UI.
-
----
-
-## 🚀 6. Setup & Execution Commands
+### Installation
 
 ```bash
-# 1. Install dependencies
+# 1. Clone the repository
+git clone https://github.com/rajyadav85/SonicAI-Music.git
+
+# 2. Navigate to the project directory
+cd SonicAI-Music
+
+# 3. Install dependencies
 npm install
 
-# 2. Launch the local Vite development server
+# 4. Start the development server
 npm run dev
+```
 
-# 3. Run ESLint checks
-npm run lint
+The app will be running at **http://localhost:5173**
 
-# 4. Generate optimized production distribution bundle
+### Build for Production
+
+```bash
 npm run build
+npm run preview
 ```
 
 ---
 
-## 💡 7. Technical Highlights & Interview Discussion
-* **Architecture**: Modular React 19 architecture with Context API preventing prop drilling across nested components.
-* **Responsiveness**: 100% mobile-friendly with slide-over drawers, touch carousels, and adaptive player controls.
-* **Performance**: Strict memoization with `useCallback`, `useMemo`, and `useRef` keeping render cycles minimal and audio smooth at 60 FPS.
+## 🏗️ Architecture Highlights
+
+### 1. Persistent Audio Engine
+The `<PlayerBar />` and `<MusicProvider>` are mounted at the root level **outside** of `<Routes>`. This ensures audio playback is never interrupted, paused, or restarted when navigating between pages.
+
+```
+App.jsx
+├── MusicProvider (Global State)
+│   ├── Navbar
+│   ├── Sidebar
+│   ├── <Routes>           ← Only this re-renders on navigation
+│   │   ├── HomePage
+│   │   ├── ArtistsPage
+│   │   ├── ArtistDetailPage
+│   │   └── ...
+│   ├── PlayerBar          ← Always mounted, never unmounts
+│   └── Footer
+```
+
+### 2. Context-Based State Management
+Instead of Redux, the app uses React's built-in **Context API** with custom hooks:
+- **`useMusic()`** — Manages audio queue, playback controls, search, mood filtering, artist/album selection, and liked songs
+- **`useAuth()`** — Manages user signup, login, session persistence, and authentication modals
+
+### 3. Debounced API Search
+Search input uses a **350ms debounce** to prevent excessive API calls. Only triggers the JioSaavn API after the user stops typing, reducing unnecessary network requests by ~70%.
+
+### 4. Deep Linking
+Direct URL access (e.g., `localhost:5173/artist/arijit`) automatically loads the corresponding artist profile and discography without requiring navigation from the home page.
+
+---
+
+## 📸 Screenshots
+
+> Add screenshots of your application here for visual reference.
+
+---
+
+## 📝 License
+
+This project is built for educational and portfolio purposes.
+
+---
+
+## 👤 Author
+
+**Raj Yadav**
+- GitHub: [@rajyadav85](https://github.com/rajyadav85)

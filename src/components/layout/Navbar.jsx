@@ -119,7 +119,7 @@ const Navbar = ({ onToggleMobileSidebar, isMobileSidebarOpen }) => {
               <Music className="w-5 h-5 text-white" />
             </div>
             <div className="hidden sm:flex items-center gap-1.5">
-              <span className="font-extrabold text-base tracking-tight text-white">AI Mood Music</span>
+              <span className="font-extrabold text-base tracking-tight text-white">SonicAI Music</span>
               <Sparkles className="w-3.5 h-3.5 text-yellow-400" />
             </div>
           </div>
